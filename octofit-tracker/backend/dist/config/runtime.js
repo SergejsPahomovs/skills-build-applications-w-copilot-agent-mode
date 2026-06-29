@@ -1,11 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.runtime = void 0;
-const port = 8000;
-const codespaceName = process.env.CODESPACE_NAME;
-const host = codespaceName
-    ? `https://${codespaceName}-8000.app.github.dev`
-    : 'http://localhost:8000';
+const server_1 = require("../server");
+const port = server_1.serverPort;
+const host = (0, server_1.getServerHost)();
 exports.runtime = {
     port,
     host,

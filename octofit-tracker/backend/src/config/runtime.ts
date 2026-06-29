@@ -1,8 +1,7 @@
-const port = 8000;
-const codespaceName = process.env.CODESPACE_NAME;
-const host = codespaceName
-  ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000';
+import { getServerHost, serverPort } from '../server';
+
+const port = serverPort;
+const host = getServerHost();
 
 export const runtime = {
   port,
