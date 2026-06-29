@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { buildEndpointUrl, normalizeItems } from './api'
 
+const codespacesLeaderboardPath = '-8000.app.github.dev/api/leaderboard'
+
 function Leaderboard({ apiBaseUrl }) {
   const [rows, setRows] = useState([])
   const [loading, setLoading] = useState(true)
@@ -20,7 +22,9 @@ function Leaderboard({ apiBaseUrl }) {
         const data = await response.json()
         setRows(normalizeItems(data))
       } catch (requestError) {
-        setError(requestError.message)
+        setError(
+          `${requestError.message}. Expected Codespaces format: https://<codespace>${codespacesLeaderboardPath}/`,
+        )
         setRows([])
       } finally {
         setLoading(false)

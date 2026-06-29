@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { buildEndpointUrl, normalizeItems } from './api'
 
+const codespacesTeamsPath = '-8000.app.github.dev/api/teams'
+
 function Teams({ apiBaseUrl }) {
   const [teams, setTeams] = useState([])
   const [loading, setLoading] = useState(true)
@@ -20,7 +22,9 @@ function Teams({ apiBaseUrl }) {
         const data = await response.json()
         setTeams(normalizeItems(data))
       } catch (requestError) {
-        setError(requestError.message)
+        setError(
+          `${requestError.message}. Expected Codespaces format: https://<codespace>${codespacesTeamsPath}/`,
+        )
         setTeams([])
       } finally {
         setLoading(false)

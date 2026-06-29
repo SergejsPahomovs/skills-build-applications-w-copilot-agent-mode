@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { buildEndpointUrl, normalizeItems } from './api'
 
+const codespacesActivitiesPath = '-8000.app.github.dev/api/activities'
+
 function Activities({ apiBaseUrl }) {
   const [activities, setActivities] = useState([])
   const [loading, setLoading] = useState(true)
@@ -20,7 +22,9 @@ function Activities({ apiBaseUrl }) {
         const data = await response.json()
         setActivities(normalizeItems(data))
       } catch (requestError) {
-        setError(requestError.message)
+        setError(
+          `${requestError.message}. Expected Codespaces format: https://<codespace>${codespacesActivitiesPath}/`,
+        )
         setActivities([])
       } finally {
         setLoading(false)

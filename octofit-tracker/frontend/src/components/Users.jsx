@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { buildEndpointUrl, normalizeItems } from './api'
 
+const codespacesUsersPath = '-8000.app.github.dev/api/users'
+
 function Users({ apiBaseUrl }) {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
@@ -20,7 +22,9 @@ function Users({ apiBaseUrl }) {
         const data = await response.json()
         setUsers(normalizeItems(data))
       } catch (requestError) {
-        setError(requestError.message)
+        setError(
+          `${requestError.message}. Expected Codespaces format: https://<codespace>${codespacesUsersPath}/`,
+        )
         setUsers([])
       } finally {
         setLoading(false)
